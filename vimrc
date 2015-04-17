@@ -1,8 +1,8 @@
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
+call vundle#begin()
 " This is the Vundle package, which can be found on GitHub.
 " For GitHub repos, you specify plugins using the
 " 'user/repository' format
@@ -29,6 +29,8 @@ Plugin 'sjl/gundo.vim'
 Plugin 'airblade/vim-rooter'
 Plugin 'luochen1990/rainbow'
 Plugin 'flazz/vim-colorschemes'
+
+call vundle#end()
 
 filetype plugin indent on
 
