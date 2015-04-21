@@ -75,6 +75,11 @@ let g:indentLine_color_term = 239
 
 set cot-=preview
 
+let g:EclimTempFilesEnable = 0
+
+" ignore some files, especially for Ctrl-P
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*
+
 let g:rainbow_active = 1
 
 let g:rainbow_conf = {
