@@ -30,6 +30,8 @@ Plugin 'sjl/gundo.vim'
 Plugin 'airblade/vim-rooter'
 Plugin 'luochen1990/rainbow'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'fatih/vim-go'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 
@@ -46,6 +48,9 @@ set hlsearch
 set t_Co=256
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+
+colorscheme molokai
+let g:molokai_original = 1
 
 autocmd vimenter * NERDTree
 
@@ -105,3 +110,33 @@ let g:rainbow_conf = {
     \   }
     \}
 
+" Tagbar settings
+nmap <F8> :TagbarToggle<CR>
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+	\ }
