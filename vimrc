@@ -1,14 +1,24 @@
+" Let's do it.
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+inoremap <up> <nop>
+
 set nocompatible
+
+" Vundle --------------------------------
 filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
-
 call vundle#begin()
-" This is the Vundle package, which can be found on GitHub.
-" For GitHub repos, you specify plugins using the
-" 'user/repository' format
+
+" Required by Vundle
 Plugin 'gmarik/vundle'
 
+" Actual list of plugins
 Plugin 'kien/ctrlp.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'Raimondi/delimitMate'
@@ -35,42 +45,66 @@ Plugin 'majutsushi/tagbar'
 Plugin 'eiginn/netrw'
 Plugin 'mileszs/ack.vim'
 Plugin 'gregsexton/gitv'
+Plugin 'burnettk/vim-angular'
 " Plugin 'Valloric/YouCompleteMe'
 " js options to try out
-" Plugin 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
 " Plugin 'maksimr/vim-jsbeautify'
+" Plugin 'einars/js-beautify'
+Plugin 'rizzatti/dash.vim'
+Plugin 'othree/html5.vim'
 
 call vundle#end()
-
 filetype plugin indent on
 
+" --------------------- end Vundle
+
+" Basic options -------------------------------------
 syntax on " syntax coloration
+syntax sync minlines=256
+set synmaxcol=2048
+set autoindent
+set smartindent
+set formatoptions=tcqr
 
-set number " show line number
-
-set tabstop=4 softtabstop=4 shiftwidth=4 " use 4 spaces for tabs
-
-set hlsearch
-
-set t_Co=256
-
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-
-" settings for NERDTree
-autocmd vimenter * NERDTree
-nmap <F6> :NERDTreeToggle<CR>
-
-" set the color scheme to molokai
-colorscheme molokai
-let g:molokai_original = 1
-
-" some general settings
 set history=1000 " remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title " change the terminal's title
 set visualbell " don't beep
 set noerrorbells " don't beep
+
+set cursorline
+set mousehide
+
+set number
+set nowrap
+set list
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+set hlsearch
+set incsearch
+set wrapscan
+
+set ignorecase
+set smartcase
+
+set t_Co=256
+
+" ------------------------- end Basic options
+
+" UltiSnip options ---------------
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+
+" set the color scheme to molokai
+colorscheme molokai
+let g:molokai_original = 1
+
+" settings for NERDTree
+nmap <F6> :NERDTreeToggle<CR>
 
 " settings for the airline, status line plugin
 let g:airline#extensions#tabline#enabled = 1
@@ -79,7 +113,7 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-" settings for syntastic
+" settings for syntastic --------------------------
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
@@ -88,7 +122,8 @@ let g:syntastic_error_symbol = "X"
 let g:syntastic_style_error_symbol = ">"
 let g:syntastic_warning_symbol = "!"
 let g:syntastic_style_warning_symbol = ">"
-
+let g:syntastic_html_tidy_exec = 'tidy5 -config ~/.vim/tidy.conf'
+" ----------------------------------------- end syntastic settings
 let g:indentLine_color_term = 239
 
 set cot-=preview
@@ -97,7 +132,8 @@ set cot-=preview
 let g:EclimTempFilesEnable = 0
 
 " ignore some files, especially for Ctrl-P
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,/node_modules/*
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 " Rainbow parenthesis and brackets coloration
 let g:rainbow_active = 1
