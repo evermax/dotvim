@@ -62,6 +62,7 @@ filetype plugin indent on
 " Basic options -------------------------------------
 syntax on " syntax coloration
 syntax sync minlines=256
+filetype plugin indent on
 set synmaxcol=2048
 set autoindent
 set smartindent
