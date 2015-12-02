@@ -20,7 +20,6 @@ Plugin 'gmarik/vundle'
 
 " Actual list of plugins
 Plugin 'kien/ctrlp.vim'
-Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
@@ -28,31 +27,16 @@ Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-scriptease'
 Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-surround'
 Plugin 'honza/vim-snippets'
-Plugin 'kshenoy/vim-signature'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'sjl/gundo.vim'
 Plugin 'airblade/vim-rooter'
 Plugin 'luochen1990/rainbow'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'fatih/vim-go'
 Plugin 'majutsushi/tagbar'
-Plugin 'eiginn/netrw'
-Plugin 'mileszs/ack.vim'
-Plugin 'gregsexton/gitv'
-Plugin 'burnettk/vim-angular'
 " Plugin 'Valloric/YouCompleteMe'
-" js options to try out
-Plugin 'pangloss/vim-javascript'
-" Plugin 'maksimr/vim-jsbeautify'
-" Plugin 'einars/js-beautify'
-Plugin 'rizzatti/dash.vim'
-Plugin 'othree/html5.vim'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'rgrinberg/vim-ocaml'
 
 call vundle#end()
 filetype plugin indent on
@@ -97,6 +81,9 @@ set t_Co=256
 
 " ------------------------- end Basic options
 
+" Change leader
+let mapleader = ","
+
 " UltiSnip options ---------------
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
@@ -129,12 +116,13 @@ let g:indentLine_color_term = 239
 
 set cot-=preview
 
-" avoid eclim temp files
-let g:EclimTempFilesEnable = 0
-
 " ignore some files, especially for Ctrl-P
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,/node_modules/*
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\.git$\|node_modules\|bower_components',
+    \ 'file': 'DS_Store'
+    \ }
+let g:ctrlp_show_hidden = 1
 
 " Rainbow parenthesis and brackets coloration
 let g:rainbow_active = 1
@@ -160,6 +148,12 @@ let g:rainbow_conf = {
     \       'css': 0,
     \   }
     \}
+
+" Ocaml indent
+set rtp+=~/.vim/plugin/ocp-indent-vim
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:syntastic_ocaml_checkers = ['merlin']
 
 " Tagbar settings
 nmap <F8> :TagbarToggle<CR>
@@ -191,3 +185,26 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 	\ }
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+let g:go_fmt_command = "goimports"
+
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
