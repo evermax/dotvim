@@ -23,10 +23,12 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-rooter'
@@ -91,11 +93,12 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 colorscheme molokai
 let g:molokai_original = 1
 
-" settings for NERDTree
-nmap <F6> :NERDTreeToggle<CR>
+" settings for NERDTreeTabs
+nmap <F6> :NERDTreeTabsToggle<CR>
 
 " settings for the airline, status line plugin
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -110,14 +113,14 @@ let g:syntastic_error_symbol = "X"
 let g:syntastic_style_error_symbol = ">"
 let g:syntastic_warning_symbol = "!"
 let g:syntastic_style_warning_symbol = ">"
-let g:syntastic_html_tidy_exec = 'tidy5 -config ~/.vim/tidy.conf'
+" let g:syntastic_html_tidy_exec = 'tidy5 -config ~/.vim/tidy.conf'
 " ----------------------------------------- end syntastic settings
 let g:indentLine_color_term = 239
 
 set cot-=preview
 
 " ignore some files, especially for Ctrl-P
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/target/*,/node_modules/*
+set wildignore+=*/tmp/*,*.so,*.zip,*/target/*,/node_modules/*
 let g:ctrlp_custom_ignore = {
     \ 'dir': '\.git$\|node_modules\|bower_components',
     \ 'file': 'DS_Store'
@@ -157,6 +160,7 @@ let g:syntastic_ocaml_checkers = ['merlin']
 
 " Tagbar settings
 nmap <F8> :TagbarToggle<CR>
+autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -186,13 +190,14 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 	\ }
 
+" Go settings
+let g:go_fmt_command = "goimports"
+
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
-let g:go_fmt_command = "goimports"
 
 " let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 " let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
