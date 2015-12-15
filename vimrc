@@ -27,17 +27,12 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
-Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
-Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-rooter'
 Plugin 'luochen1990/rainbow'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'fatih/vim-go'
 Plugin 'majutsushi/tagbar'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'rgrinberg/vim-ocaml'
 
 call vundle#end()
@@ -85,9 +80,6 @@ set t_Co=256
 
 " Change leader
 let mapleader = ","
-
-" UltiSnip options ---------------
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " set the color scheme to molokai
 colorscheme molokai
@@ -160,56 +152,4 @@ let g:syntastic_ocaml_checkers = ['merlin']
 
 " Tagbar settings
 nmap <F8> :TagbarToggle<CR>
-autocmd BufEnter * nested :call tagbar#autoopen(0)
 
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-	\ }
-
-" Go settings
-let g:go_fmt_command = "goimports"
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
