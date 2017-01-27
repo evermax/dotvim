@@ -18,27 +18,54 @@ call vundle#begin()
 " Required by Vundle
 Plugin 'gmarik/vundle'
 
-" Actual list of plugins
-Plugin 'kien/ctrlp.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Yggdroot/indentLine'
+" 'Set of defaults everyone can agree on'
+Plugin 'tpope/vim-sensible'
+
+" Coloration plugins
+Plugin 'flazz/vim-colorschemes'
+Plugin 'luochen1990/rainbow'
+
+" Git support
+Plugin 'tpope/vim-fugitive'
+
+" Syntax
+Plugin 'scrooloose/syntastic'
+
+" =====> IDE-like features
+" Contextual windows and display
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-rooter'
+Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/syntastic'
+
+" Search
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Completions
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'ervandew/supertab'
-Plugin 'bling/vim-airline'
-Plugin 'SirVer/ultisnips'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'honza/vim-snippets'
-Plugin 'airblade/vim-rooter'
-Plugin 'luochen1990/rainbow'
-Plugin 'flazz/vim-colorschemes'
+Plugin 'Yggdroot/indentLine'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-surround'
+" <=====
+
+" Go plugin
 Plugin 'fatih/vim-go'
-Plugin 'majutsushi/tagbar'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'rgrinberg/vim-ocaml'
+
+" Dependancy for plugins after
+Plugin 'Shougo/vimproc.vim'
+
+" Typescript and Angular plugins
+Plugin 'Quramy/vim-js-pretty-template'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'Quramy/ng-tsserver'
+Plugin 'bdauria/angular-cli.vim'
+
+" Snippet plugins
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
 
 call vundle#end()
 filetype plugin indent on
@@ -59,6 +86,7 @@ set undolevels=1000 " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title " change the terminal's title
 set visualbell " don't beep
+set t_vb= " don't even beep visually
 set noerrorbells " don't beep
 
 set cursorline
@@ -71,6 +99,9 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+
+" Can be a problem in event of a crash
+set noswapfile
 
 set hlsearch
 set incsearch
@@ -98,7 +129,8 @@ nmap <F6> :NERDTreeTabsToggle<CR>
 
 " settings for the airline, status line plugin
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" To be set to one in a terminal that support powerline fonts
+let g:airline_powerline_fonts = 0
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -152,15 +184,11 @@ let g:rainbow_conf = {
     \   }
     \}
 
-" Ocaml indent
-set rtp+=~/.vim/plugin/ocp-indent-vim
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:syntastic_ocaml_checkers = ['merlin']
-
 " Tagbar settings
 nmap <F8> :TagbarToggle<CR>
 autocmd BufEnter * nested :call tagbar#autoopen(0)
+
+autocmd FileType qf wincmd J
 
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -213,3 +241,32 @@ au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+
+" Angular and Typescript settings
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_option = ''
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost l* nested lwindow
+
+autocmd FileType typescript JsPreTmpl html
+autocmd FileType typescript syn clear foldBraces
+
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
+
+" Open file from CtrlP in a new tab by default
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ }
