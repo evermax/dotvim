@@ -95,10 +95,12 @@ set mousehide
 set number
 set nowrap
 set list
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
+
+set mouse=a
 
 " Can be a problem in event of a crash
 set noswapfile
@@ -186,7 +188,7 @@ let g:rainbow_conf = {
 
 " Tagbar settings
 nmap <F8> :TagbarToggle<CR>
-autocmd BufEnter * nested :call tagbar#autoopen(0)
+" autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 autocmd FileType qf wincmd J
 
@@ -270,3 +272,5 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ }
+
+let g:NERDTreeMouseMode = 2
